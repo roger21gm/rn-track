@@ -8,6 +8,7 @@ import TrackCreateScreen from "./src/screens/TrackCreateScreen";
 import AccountScreen from "./src/screens/AccountScreen";
 import TrackListScreen from "./src/screens/TrackListScreen";
 import TrackDetailScreen from "./src/screens/TrackDetailScreen";
+import {Provider as AuthProvider} from "./src/context/AuthContext";
 
 
 const switchNavigatorConfig = createSwitchNavigator({
@@ -25,4 +26,12 @@ const switchNavigatorConfig = createSwitchNavigator({
     })
 });
 
-export default createAppContainer(switchNavigatorConfig);
+const App = createAppContainer(switchNavigatorConfig);
+
+export default () => {
+    return (
+        <AuthProvider>
+            <App/>
+        </AuthProvider>
+    )
+}
