@@ -1,46 +1,28 @@
-import React, { useState, useContext } from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Button, Input, Text} from 'react-native-elements'
-import Spacer from "../components/Spacer";
-import { Context as AuthContext } from '../context/AuthContext';
+import {Context as AuthContext} from '../context/AuthContext';
+import AuthForm from "../components/AuthForm";
+import NavLink from "../components/NavLink";
+import {NavigationEvents} from "react-navigation";
 
 const SignupScreen = () => {
-
-    const {state, signup} = useContext(AuthContext);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
-
-    console.log(state);
+    const {state, signup, clearErrorMessage } = useContext(AuthContext);
 
     return (
         <View style={styles.container}>
-            <Spacer>
-                <Text h3> Signup for Tracker</Text>
-            </Spacer>
-            <Input
-                label="Email"
-                value={email}
-                onChangeText={setEmail}
-                autoCapitalize='none'
-                autoCorrect={false}
+            <NavigationEvents
+                onWillFocus={clearErrorMessage}
             />
-            <Spacer/>
-            <Input
-                label="Password"
-                value={password}
-                onChangeText={setPassword}
-                autoCapitalize='none'
-                autoCorrect={false}
-                secureTextEntry
+            <AuthForm
+                headerText='Sign Up for Tracker'
+                errorMessage={state.errorMessage}
+                onSubmit={signup}
+                submitButtonText='Sign Up'
             />
-            {state.errorMessage ? <Text style={styles.errorMessage}> {state.errorMessage}</Text> : null}
-            <Spacer>
-                <Button
-                    title='Sign Up'
-                    onPress={() => signup({ email, password })}
-                />
-            </Spacer>
+            <NavLink
+                text='Already have an account? Sign in instead'
+                routeName='Signin'
+            />
         </View>
     )
 };
@@ -56,12 +38,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         marginBottom: 250,
-    },
-    errorMessage: {
-        fontSize: 16,
-        marginLeft: 15,
-        marginTop: 15,
-        color: 'red',
     }
 });
 
