@@ -25,6 +25,13 @@ const authReducer = (state, action) => {
             errorMessage: '',
         };
     }
+    case 'signout': {
+        return {
+            ...state,
+            token: null,
+            errorMessage: '',
+        }
+    }
     default:
         return state;
     }
@@ -38,12 +45,13 @@ const clearErrorMessage = (dispatch) => () => {
 
 const tryLocalSignin = (dispatch) => async () => {
     const token = await AsyncStorage.getItem('token');
+    console.log(token);
     if (token) {
         dispatch({
             type: 'signin',
             payload: token,
         });
-        navigate('TrackListScreen');
+        navigate('TrackList');
     } else {
         navigate('loginFlow');
     }
@@ -87,8 +95,12 @@ const signin = (dispatch) => async ({ email, password }) => {
 };
 
 
-const signout = (dispatch) => () => {
-
+const signout = (dispatch) => async () => {
+    await AsyncStorage.removeItem('token');
+    dispatch({
+        type: 'signout'
+    });
+    navigate('loginFlow');
 };
 
 export const { Provider, Context } = createDataContext(
