@@ -9,8 +9,9 @@ import AccountScreen from './src/screens/AccountScreen';
 import TrackListScreen from './src/screens/TrackListScreen';
 import TrackDetailScreen from './src/screens/TrackDetailScreen';
 import { Provider as AuthProvider } from './src/context/AuthContext';
+import { Provider as LocationProvider } from './src/context/LocationContext';
 import { setNavigator } from './src/navigationRef';
-import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
+import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 
 
 const switchNavigatorConfig = createSwitchNavigator({
@@ -32,7 +33,9 @@ const switchNavigatorConfig = createSwitchNavigator({
 const App = createAppContainer(switchNavigatorConfig);
 
 export default () => (
-    <AuthProvider>
-        <App ref={(navigator) => setNavigator(navigator)} />
-    </AuthProvider>
+    <LocationProvider>
+        <AuthProvider>
+            <App ref={(navigator) => setNavigator(navigator)} />
+        </AuthProvider>
+    </LocationProvider>
 );
