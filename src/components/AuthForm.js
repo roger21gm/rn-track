@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
-import {Button, Input, Text} from "react-native-elements";
-import {StyleSheet} from "react-native";
-import Spacer from "./Spacer";
+import React, { useState } from 'react';
+import { Button, Input, Text } from 'react-native-elements';
+import { StyleSheet } from 'react-native';
+import Spacer from './Spacer';
 
 const AuthForm = (props) => {
-
-    const { headerText, errorMessage, onSubmit, submitButtonText } = props;
+    const {
+        headerText, errorMessage, onSubmit, submitButtonText,
+    } = props;
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -19,27 +20,32 @@ const AuthForm = (props) => {
                 label="Email"
                 value={email}
                 onChangeText={setEmail}
-                autoCapitalize='none'
+                autoCapitalize="none"
                 autoCorrect={false}
             />
-            <Spacer/>
+            <Spacer />
             <Input
                 label="Password"
                 value={password}
                 onChangeText={setPassword}
-                autoCapitalize='none'
+                autoCapitalize="none"
                 autoCorrect={false}
                 secureTextEntry
             />
-            {errorMessage ? <Text style={styles.errorMessage}> {errorMessage}</Text> : null}
+            {errorMessage ? (
+                <Text style={styles.errorMessage}>
+                    {' '}
+                    {errorMessage}
+                </Text>
+            ) : null}
             <Spacer>
                 <Button
                     title={submitButtonText}
-                    onPress={() => onSubmit({email, password})}
+                    onPress={() => onSubmit({ email, password })}
                 />
             </Spacer>
         </>
-    )
+    );
 };
 
 const styles = StyleSheet.create({
